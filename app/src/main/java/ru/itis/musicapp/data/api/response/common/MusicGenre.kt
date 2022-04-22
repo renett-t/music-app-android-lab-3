@@ -1,8 +1,8 @@
-package ru.itis.musicapp.data.api.response.chart
+package ru.itis.musicapp.data.api.response.common
 
 import com.google.gson.annotations.SerializedName
 
-data class MusicGenreX(
+data class MusicGenre(
     @SerializedName("music_genre_id")
     val id: Int,
     @SerializedName("music_genre_name")

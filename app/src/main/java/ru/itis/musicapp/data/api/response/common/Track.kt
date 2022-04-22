@@ -1,8 +1,8 @@
-package ru.itis.musicapp.data.api.response.chart
+package ru.itis.musicapp.data.api.response.common
 
 import com.google.gson.annotations.SerializedName
 
-data class TrackX(
+data class Track(
     @SerializedName("album_id")
     val albumId: Int,
     @SerializedName("album_name")
@@ -30,13 +30,13 @@ data class TrackX(
     @SerializedName("restricted")
     val restricted: Int,
     @SerializedName("track_edit_url")
-    val trackEdiUurl: String,
+    val trackEdiUrl: String,
     @SerializedName("track_id")
     val trackId: Int,
     @SerializedName("track_name")
     val trackName: String,
     @SerializedName("track_name_translation_list")
-    val trackNameTranslationList: List<Any>, // todo: wtf??
+    val trackNameTranslationList: List<TrackNameTranslationWrapper>,
     @SerializedName("track_rating")
     val trackRating: Int,
     @SerializedName("track_share_url")
