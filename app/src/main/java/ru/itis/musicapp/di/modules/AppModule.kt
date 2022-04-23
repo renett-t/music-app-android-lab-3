@@ -1,10 +1,10 @@
 package ru.itis.musicapp.di.modules
 
-import dagger.Component
 import dagger.Module
 
 @Module(includes = [
-    NetModule::class
+    NetModule::class,
+    RepoModule::class
 ])
 class AppModule {
 

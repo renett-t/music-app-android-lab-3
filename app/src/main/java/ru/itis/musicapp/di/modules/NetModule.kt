@@ -1,7 +1,6 @@
 package ru.itis.musicapp.di.modules
 
 import androidx.viewbinding.BuildConfig
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -16,11 +15,10 @@ import ru.itis.musicapp.di.quailfier.ApiKeyInterceptor
 import ru.itis.musicapp.di.quailfier.LoggingInterceptor
 
 private const val BASE_URL = "http://api.musixmatch.com/ws/1.1/"
-private const val API_KEY_VALUE = "*"
+private const val API_KEY_VALUE = "06fe33a7c32105881da7f435de5d47c1"
 private const val API_KEY_QUERY = "apikey"
-@Module(includes = [
-    NetBindModule::class
-])
+
+@Module
 class NetModule {
 
     @Provides
@@ -76,10 +74,4 @@ class NetModule {
         .addCallAdapterFactory(callAdapterFactory)
         .build()
         .create(MusixMatchApi::class.java)
-}
-
-@Module
-interface NetBindModule {
-    @Binds
-    fun provideMapper()
 }
