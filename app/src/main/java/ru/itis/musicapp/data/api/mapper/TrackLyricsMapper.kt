@@ -7,7 +7,10 @@ import javax.inject.Inject
 class TrackLyricsMapper @Inject constructor() {
 
     fun map(response: TrackLyricsResponse) : Lyrics {
-
-        return Lyrics()
+        val lyrics = response.message.body.lyrics
+        return Lyrics(lyrics.id,
+                lyrics.body,
+                lyrics.explicit >0
+        )
     }
 }

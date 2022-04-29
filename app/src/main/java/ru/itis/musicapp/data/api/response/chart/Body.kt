@@ -5,5 +5,5 @@ import ru.itis.musicapp.data.api.response.common.TrackWrapper
 
 data class Body (
     @SerializedName("track_list")
-    val tracks: List<TrackWrapper>
+    val tracks: MutableList<TrackWrapper>
 )

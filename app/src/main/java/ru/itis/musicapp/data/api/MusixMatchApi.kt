@@ -9,20 +9,20 @@ import ru.itis.musicapp.data.api.response.search.SearchTracksResponse
 
 interface MusixMatchApi {
     @GET("chart.tracks.get?chart_name=top&f_has_lyrics=1")
-    fun getChartTracks(@Query("country") country: String, @Query("page") page: Int, @Query("page") page_size: Int): Single<ChartTracksResponse>
+    fun getChartTracks(@Query("country") country: String, @Query("page") page: Int, @Query("page") pageSize: Int): Single<ChartTracksResponse>
 
     @GET("track.lyrics.get")
     fun getTrackLyrics(@Query("track_id") trackId: Int, @Query("commontrack_id") commontrackId: Int): Single<TrackLyricsResponse>
 
     @GET("track.search?s_artist_rating=desc")
-    fun searchTracksByTrackTitle(@Query("q_track") trackQuery: String, @Query("page") page: Int, @Query("page") page_size: Int): Single<SearchTracksResponse>
+    fun searchTracksByTrackTitle(@Query("q_track") trackQuery: String, @Query("page") page: Int, @Query("page") pageSize: Int): Single<SearchTracksResponse>
 
     @GET("track.search?s_track_rating=desc")
-    fun searchTracksByArtist(@Query("q_artist") artistQuery: String, @Query("page") page: Int, @Query("page") page_size: Int): Single<SearchTracksResponse>
+    fun searchTracksByArtist(@Query("q_artist") artistQuery: String, @Query("page") page: Int, @Query("page") pageSize: Int): Single<SearchTracksResponse>
 
     @GET("track.search?s_track_rating=desc")
-    fun searchTracksByLyrics(@Query("q_lyrics") lyricsQuery: String, @Query("page") page: Int, @Query("page") page_size: Int): Single<SearchTracksResponse>
+    fun searchTracksByLyrics(@Query("q_lyrics") lyricsQuery: String, @Query("page") page: Int, @Query("page") pageSize: Int): Single<SearchTracksResponse>
 
     @GET("track.search?s_track_rating=desc")
-    fun searchTracksByTrackTitleOrArtist(@Query("q_track_artist") query: String, @Query("page") page: Int, @Query("page") page_size: Int): Single<SearchTracksResponse>
+    fun searchTracksByTrackTitleOrArtist(@Query("q_track_artist") query: String, @Query("page") page: Int, @Query("page") pageSize: Int): Single<SearchTracksResponse>
 }
