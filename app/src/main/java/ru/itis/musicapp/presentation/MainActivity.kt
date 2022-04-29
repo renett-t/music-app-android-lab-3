@@ -1,7 +1,8 @@
-package ru.itis.musicapp
+package ru.itis.musicapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ru.itis.musicapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
