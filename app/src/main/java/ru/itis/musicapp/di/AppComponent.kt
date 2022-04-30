@@ -4,6 +4,8 @@ import dagger.BindsInstance
 import dagger.Component
 import ru.itis.musicapp.di.modules.*
 import ru.itis.musicapp.MusicApp
+import ru.itis.musicapp.presentation.fragments.DetailsFragment
+import ru.itis.musicapp.presentation.fragments.ListFragment
 
 @Component(
     modules = [AppModule::class]
@@ -19,5 +21,6 @@ interface AppComponent {
     }
 
     fun inject(application: MusicApp)
-
+    fun inject(listFragment: ListFragment)
+    fun inject(detailsFragment: DetailsFragment)
 }

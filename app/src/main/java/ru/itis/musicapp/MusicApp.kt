@@ -1,23 +1,17 @@
 package ru.itis.musicapp
 
 import android.app.Application
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import javax.inject.Inject
+import ru.itis.musicapp.di.AppComponent
 
-class MusicApp : Application(), HasAndroidInjector {
-
-    @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+class MusicApp : Application() {
+    lateinit var appComponent: AppComponent
+        private set
 
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
             .application(this)
             .build()
             .inject(this)
     }
-
-    override fun androidInjector(): AndroidInjector<Any> = androidInjector
 }
