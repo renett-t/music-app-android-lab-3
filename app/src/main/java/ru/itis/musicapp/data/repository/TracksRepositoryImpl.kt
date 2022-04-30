@@ -27,35 +27,35 @@ class TracksRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getChartTracksForCountry(country: String, amount: Int): Observable<List<Track>> {
+    override fun getChartTracksForCountry(country: String, amount: Int): Observable<MutableList<Track>> {
         return getChartTracks(country, amount, api::getChartTracks)
             ?.map {
                 chartTracksMapper.map(it)
             } ?: throw TracksNotFoundException("Unable to get $amount tracks for country = $country")
     }
 
-    override fun getTracksBySearchQuery(query: String, amount: Int): Observable<List<Track>> {
+    override fun getTracksBySearchQuery(query: String, amount: Int): Observable<MutableList<Track>> {
         return getTracksBySomeQuery(query, amount, api::searchTracksByTrackTitleOrArtist)
             ?.map {
                 searchTracksMapper.map(it)
             } ?: throw TracksNotFoundException("Unable to get $amount tracks for query = $query")
     }
 
-    override fun getTracksByTrackTitle(query: String, amount: Int): Observable<List<Track>> {
+    override fun getTracksByTrackTitle(query: String, amount: Int): Observable<MutableList<Track>> {
         return getTracksBySomeQuery(query, amount, api::searchTracksByTrackTitle)
             ?.map {
                 searchTracksMapper.map(it)
             } ?: throw TracksNotFoundException("Unable to get $amount tracks for query = $query")
     }
 
-    override fun getTracksByArtistName(query: String, amount: Int): Observable<List<Track>> {
+    override fun getTracksByArtistName(query: String, amount: Int): Observable<MutableList<Track>> {
         return getTracksBySomeQuery(query, amount, api::searchTracksByArtist)
             ?.map {
                 searchTracksMapper.map(it)
             } ?: throw TracksNotFoundException("Unable to get $amount tracks for query = $query")
     }
 
-    override fun getTracksByLyricsPiece(query: String, amount: Int): Observable<List<Track>> {
+    override fun getTracksByLyricsPiece(query: String, amount: Int): Observable<MutableList<Track>> {
         return getTracksBySomeQuery(query, amount, api::searchTracksByLyrics)
             ?.map {
                 searchTracksMapper.map(it)

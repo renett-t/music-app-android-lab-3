@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class SearchTracksMapper @Inject constructor() {
 
-    fun map(response: SearchTracksResponse): List<Track> {
+    fun map(response: SearchTracksResponse): MutableList<Track> {
         val list = ArrayList<Track>()
         for (trackWr in response.message.body.tracks) {
             val track = trackWr.track

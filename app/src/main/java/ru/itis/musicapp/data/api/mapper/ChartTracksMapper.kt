@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class ChartTracksMapper @Inject constructor() {
 
-    fun map(response: ChartTracksResponse): List<Track> {
+    fun map(response: ChartTracksResponse): MutableList<Track> {
         val list = ArrayList<Track>()
         for (trackWr in response.message.body.tracks) {
             val track = trackWr.track
