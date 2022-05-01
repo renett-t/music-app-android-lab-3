@@ -23,14 +23,14 @@ class ListPresenter @Inject constructor(
 
     fun getTrackListByCountry(country: String, amount: Int) {
         disposables += getChartTracksUseCase(country, amount)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
                 viewState.showLoading()
             }
             .doAfterTerminate {
                 viewState.hideLoading()
             }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = { list ->
                     viewState.showTracksList(list)
@@ -46,14 +46,14 @@ class ListPresenter @Inject constructor(
 
     fun getTrackListBySearchQuery(query: String, amount: Int) {
         disposables += getTracksBySearchQuery(query, amount)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
                 viewState.showLoading()
             }
             .doAfterTerminate {
                 viewState.hideLoading()
             }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = { list ->
                     viewState.showTracksList(list)

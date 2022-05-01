@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.itis.musicapp.R
@@ -21,7 +22,7 @@ import javax.inject.Inject
 const val TRACK_ID = "track_id_key"
 const val COMMON_ID = "track_id_key"
 
-class DetailsFragment : Fragment(R.layout.fragment_details), LyricsMvpView {
+class DetailsFragment : MvpAppCompatFragment(R.layout.fragment_details), LyricsMvpView {
     private lateinit var binding: FragmentDetailsBinding
 
     @Inject

@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.itis.musicapp.R
@@ -23,9 +23,9 @@ import ru.itis.musicapp.presentation.mvp.view.ListMvpView
 import ru.itis.musicapp.presentation.rv.TracksAdapter
 import javax.inject.Inject
 
-class ListFragment : Fragment(R.layout.fragment_list), ListMvpView {
+class ListFragment : MvpAppCompatFragment(R.layout.fragment_list), ListMvpView {
     private val defaultAmount = 15
-    private val defaultCountry = "XW"
+    private val defaultCountry = "RU"
     private lateinit var binding: FragmentListBinding
 
     @Inject
@@ -51,6 +51,7 @@ class ListFragment : Fragment(R.layout.fragment_list), ListMvpView {
         hideBackButton()
         initializeRecyclerView()
         initializeSearchBar()
+//        presenter.getTrackListByCountry(defaultCountry, defaultAmount)
     }
 
     private fun hideBackButton() {
@@ -67,7 +68,6 @@ class ListFragment : Fragment(R.layout.fragment_list), ListMvpView {
             adapter = tracksAdapter
             addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         }
-        presenter.getTrackListByCountry(defaultCountry, defaultAmount)
     }
 
     private fun initializeSearchBar() {

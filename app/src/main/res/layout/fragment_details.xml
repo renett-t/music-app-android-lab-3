@@ -20,13 +20,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/test_track_title"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:scrollHorizontally="true"
+        android:maxWidth="220dp"
         android:textStyle="bold"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textColor="@color/black"
-        android:layout_margin="8dp"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toTopOf="@id/iv_cover"
         app:layout_constraintStart_toEndOf="@id/iv_cover"
+        app:layout_constraintEnd_toStartOf="@id/iv_explicit"
         android:layout_marginStart="@dimen/defaultMargin"
         app:layout_constraintBottom_toTopOf="@id/tv_artist" />
 
@@ -35,11 +39,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/test_artist"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:scrollHorizontally="true"
+        android:maxWidth="220dp"
         android:textStyle="bold"
-        android:textSize="30sp"
+        android:textSize="26sp"
         app:layout_constraintTop_toBottomOf="@id/tv_track"
         app:layout_constraintStart_toStartOf="@id/tv_track"
-        app:layout_constraintBottom_toBottomOf="@id/iv_cover" />
+        app:layout_constraintBottom_toBottomOf="@id/iv_cover"
+        />
 
     <ImageView
         android:id="@+id/iv_explicit"
@@ -60,10 +69,11 @@
 
     <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -73,7 +83,7 @@
             <TextView
                 android:id="@+id/tv_lyrics"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 tools:text="@string/test_lyrics"
                 android:textColor="@color/black"
                 android:textSize="16sp"
