@@ -20,7 +20,7 @@ interface MusixMatchApi {
     fun getChartTracks(
         @Query("country") country: String,
         @Query("page") page: Int,
-        @Query("page") pageSize: Int
+        @Query("page_size") pageSize: Int
     ): Single<ChartTracksResponse>
 
     @GET("track.lyrics.get")
@@ -33,27 +33,27 @@ interface MusixMatchApi {
     fun searchTracksByTrackTitle(
         @Query("q_track") trackQuery: String,
         @Query("page") page: Int,
-        @Query("page") pageSize: Int
+        @Query("page_size") pageSize: Int
     ): Single<SearchTracksResponse>
 
     @GET("track.search?s_track_rating=desc")
     fun searchTracksByArtist(
         @Query("q_artist") artistQuery: String,
         @Query("page") page: Int,
-        @Query("page") pageSize: Int
+        @Query("page_size") pageSize: Int
     ): Single<SearchTracksResponse>
 
     @GET("track.search?s_track_rating=desc")
     fun searchTracksByLyrics(
         @Query("q_lyrics") lyricsQuery: String,
         @Query("page") page: Int,
-        @Query("page") pageSize: Int
+        @Query("page_size") pageSize: Int
     ): Single<SearchTracksResponse>
 
-    @GET("track.search?s_track_rating=desc")
+    @GET("track.search?s_track_rating=desc&s_artist_rating=desc")
     fun searchTracksByTrackTitleOrArtist(
         @Query("q_track_artist") query: String,
         @Query("page") page: Int,
-        @Query("page") pageSize: Int
+        @Query("page_size") pageSize: Int
     ): Single<SearchTracksResponse>
 }

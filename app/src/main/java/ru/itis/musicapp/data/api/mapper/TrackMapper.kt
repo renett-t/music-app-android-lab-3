@@ -7,7 +7,7 @@ import javax.inject.Inject
 class TrackMapper @Inject constructor() {
 
     fun map(response: TrackResponse): Track {
-        val track = response.message.body.trackWr.track
+        val track = response.message.body.track
         return Track(
             track.trackId,
             track.commontrackId,

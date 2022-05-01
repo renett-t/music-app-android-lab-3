@@ -35,10 +35,29 @@ class TracksRepositoryImpl @Inject constructor(
     }
 
     override fun getTracksBySearchQuery(query: String, amount: Int): Observable<MutableList<Track>> {
-        return getTracksBySomeQuery(query, amount, api::searchTracksByTrackTitleOrArtist)
-            ?.map {
+        return if (amount > MAX_PAGE_SIZE) {
+            var page = 1
+            var amountLeft = amount - MAX_PAGE_SIZE
+            var response = api.searchTracksByTrackTitleOrArtist(query, page, MAX_PAGE_SIZE).toObservable()
+
+            while (amount > 0) {
+                val newResponse = api.searchTracksByTrackTitleOrArtist(query, page++, amountLeft)
+                response = response.mergeWith(newResponse)
+                amountLeft = amount - MAX_PAGE_SIZE
+            }
+
+            response.map {
                 searchTracksMapper.map(it)
-            } ?: throw TracksNotFoundException("Unable to get $amount tracks for query = $query")
+            }
+        } else {
+            api.searchTracksByTrackTitleOrArtist(query, 0, amount).toObservable().map {
+                searchTracksMapper.map(it)
+            }
+        }
+//        return getTracksBySomeQuery(query, amount, api::searchTracksByTrackTitleOrArtist)
+//            ?.map {
+//                searchTracksMapper.map(it)
+//            } ?: throw TracksNotFoundException("Unable to get $amount tracks for query = $query")
     }
 
     override fun getTracksByTrackTitle(query: String, amount: Int): Observable<MutableList<Track>> {

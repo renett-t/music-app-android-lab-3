@@ -14,7 +14,7 @@ import ru.itis.musicapp.data.api.MusixMatchApi
 import ru.itis.musicapp.di.quailfier.ApiKeyInterceptor
 import ru.itis.musicapp.di.quailfier.LoggingInterceptor
 
-private const val BASE_URL = "http://api.musixmatch.com/ws/1.1/"
+private const val BASE_URL = "https://api.musixmatch.com/ws/1.1/"
 private const val API_KEY_VALUE = "06fe33a7c32105881da7f435de5d47c1"
 private const val API_KEY_QUERY = "apikey"
 
