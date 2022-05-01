@@ -3,8 +3,7 @@ package ru.itis.musicapp.data.repository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import ru.itis.musicapp.data.api.MusixMatchApi
-import ru.itis.musicapp.data.api.mapper.ChartTracksMapper
-import ru.itis.musicapp.data.api.mapper.SearchTracksMapper
+import ru.itis.musicapp.data.api.mapper.*
 import ru.itis.musicapp.data.api.response.chart.ChartTracksResponse
 import ru.itis.musicapp.data.api.response.search.SearchTracksResponse
 import ru.itis.musicapp.domain.exception.TracksNotFoundException
@@ -18,38 +17,64 @@ private const val MAX_PAGE_SIZE = 100
 class TracksRepositoryImpl @Inject constructor(
     private val api: MusixMatchApi,
     private val chartTracksMapper: ChartTracksMapper,
-    private val searchTracksMapper: SearchTracksMapper
+    private val searchTracksMapper: SearchTracksMapper,
+    private val trackMapper: TrackMapper
 ): TracksRepository {
 
-    override fun getChartTracksForCountry(country: String, amount: Int): Observable<List<Track>> {
+    override fun getTrackByIds(trackId: Int, commonId: Int): Single<Track> {
+        return api.getTrack(trackId, commonId).map {
+            trackMapper.map(it)
+        }
+    }
+
+    override fun getChartTracksForCountry(country: String, amount: Int): Observable<MutableList<Track>> {
         return getChartTracks(country, amount, api::getChartTracks)
             ?.map {
                 chartTracksMapper.map(it)
             } ?: throw TracksNotFoundException("Unable to get $amount tracks for country = $country")
     }
 
-    override fun getTracksBySearchQuery(query: String, amount: Int): Observable<List<Track>> {
-        return getTracksBySomeQuery(query, amount, api::searchTracksByTrackTitleOrArtist)
-            ?.map {
+    override fun getTracksBySearchQuery(query: String, amount: Int): Observable<MutableList<Track>> {
+        return if (amount > MAX_PAGE_SIZE) {
+            var page = 1
+            var amountLeft = amount - MAX_PAGE_SIZE
+            var response = api.searchTracksByTrackTitleOrArtist(query, page, MAX_PAGE_SIZE).toObservable()
+
+            while (amount > 0) {
+                val newResponse = api.searchTracksByTrackTitleOrArtist(query, page++, amountLeft)
+                response = response.mergeWith(newResponse)
+                amountLeft = amount - MAX_PAGE_SIZE
+            }
+
+            response.map {
                 searchTracksMapper.map(it)
-            } ?: throw TracksNotFoundException("Unable to get $amount tracks for query = $query")
+            }
+        } else {
+            api.searchTracksByTrackTitleOrArtist(query, 0, amount).toObservable().map {
+                searchTracksMapper.map(it)
+            }
+        }
+//        return getTracksBySomeQuery(query, amount, api::searchTracksByTrackTitleOrArtist)
+//            ?.map {
+//                searchTracksMapper.map(it)
+//            } ?: throw TracksNotFoundException("Unable to get $amount tracks for query = $query")
     }
 
-    override fun getTracksByTrackTitle(query: String, amount: Int): Observable<List<Track>> {
+    override fun getTracksByTrackTitle(query: String, amount: Int): Observable<MutableList<Track>> {
         return getTracksBySomeQuery(query, amount, api::searchTracksByTrackTitle)
             ?.map {
                 searchTracksMapper.map(it)
             } ?: throw TracksNotFoundException("Unable to get $amount tracks for query = $query")
     }
 
-    override fun getTracksByArtistName(query: String, amount: Int): Observable<List<Track>> {
+    override fun getTracksByArtistName(query: String, amount: Int): Observable<MutableList<Track>> {
         return getTracksBySomeQuery(query, amount, api::searchTracksByArtist)
             ?.map {
                 searchTracksMapper.map(it)
             } ?: throw TracksNotFoundException("Unable to get $amount tracks for query = $query")
     }
 
-    override fun getTracksByLyricsPiece(query: String, amount: Int): Observable<List<Track>> {
+    override fun getTracksByLyricsPiece(query: String, amount: Int): Observable<MutableList<Track>> {
         return getTracksBySomeQuery(query, amount, api::searchTracksByLyrics)
             ?.map {
                 searchTracksMapper.map(it)
